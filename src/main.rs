@@ -9,14 +9,11 @@ struct Cli {
     #[command(subcommand)]
     command: Commands,
 
-    #[arg(short, long, default_value = "leviso/target/kernel-build/.config")]
+    #[arg(short, long, default_value = "leviso/output/kernel-build/.config")]
     kernel_config: PathBuf,
 
-    #[arg(short, long, default_value = "leviso/target/staging/usr/lib/firmware")]
+    #[arg(short = 'F', long, default_value = "leviso/output/squashfs-root/usr/lib/firmware")]
     firmware_dir: PathBuf,
-
-    #[arg(short, long, default_value = "leviso/target/staging")]
-    staging_dir: PathBuf,
 }
 
 #[derive(Subcommand)]
@@ -37,7 +34,6 @@ fn main() -> Result<()> {
     let checker = HardwareCompatChecker::new(
         cli.kernel_config,
         cli.firmware_dir,
-        cli.staging_dir,
     );
 
     match cli.command {

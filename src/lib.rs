@@ -16,15 +16,13 @@ pub use report::{CompatibilityReport, Severity, CompatResult};
 pub struct HardwareCompatChecker {
     kernel_config_path: PathBuf,
     firmware_dir: PathBuf,
-    staging_dir: PathBuf,
 }
 
 impl HardwareCompatChecker {
-    pub fn new(kernel_config: PathBuf, firmware_dir: PathBuf, staging_dir: PathBuf) -> Self {
+    pub fn new(kernel_config: PathBuf, firmware_dir: PathBuf) -> Self {
         Self {
             kernel_config_path: kernel_config,
             firmware_dir,
-            staging_dir,
         }
     }
 
