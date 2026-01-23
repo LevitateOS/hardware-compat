@@ -29,7 +29,7 @@ impl HardwareProfile for DellXpsProfile {
 
             // === Thunderbolt (critical for XPS) ===
             KernelRequirement { config: "CONFIG_USB4", expected: ConfigValue::M, reason: "USB4/Thunderbolt 4", severity: Severity::Critical },
-            KernelRequirement { config: "CONFIG_THUNDERBOLT", expected: ConfigValue::M, reason: "Thunderbolt bus", severity: Severity::Critical },
+            KernelRequirement { config: "CONFIG_USB4", expected: ConfigValue::M, reason: "Thunderbolt bus", severity: Severity::Critical },
             KernelRequirement { config: "CONFIG_TYPEC", expected: ConfigValue::M, reason: "USB Type-C", severity: Severity::Critical },
             KernelRequirement { config: "CONFIG_TYPEC_UCSI", expected: ConfigValue::M, reason: "USB Type-C UCSI", severity: Severity::High },
             KernelRequirement { config: "CONFIG_TYPEC_DP_ALTMODE", expected: ConfigValue::M, reason: "USB-C DisplayPort", severity: Severity::High },

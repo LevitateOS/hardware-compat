@@ -58,7 +58,7 @@ impl HardwareProfile for LinuxLaptopProfile {
             KernelRequirement { config: "CONFIG_USB_XHCI_HCD", expected: ConfigValue::Y, reason: "USB 3.x", severity: Severity::Critical },
             KernelRequirement { config: "CONFIG_USB_XHCI_PCI", expected: ConfigValue::Y, reason: "xHCI PCI", severity: Severity::Critical },
             KernelRequirement { config: "CONFIG_USB4", expected: ConfigValue::M, reason: "USB4/Thunderbolt", severity: Severity::High },
-            KernelRequirement { config: "CONFIG_THUNDERBOLT", expected: ConfigValue::M, reason: "Thunderbolt bus", severity: Severity::High },
+            KernelRequirement { config: "CONFIG_USB4", expected: ConfigValue::M, reason: "Thunderbolt bus", severity: Severity::High },
             KernelRequirement { config: "CONFIG_TYPEC", expected: ConfigValue::M, reason: "USB Type-C", severity: Severity::High },
 
             // === Input ===

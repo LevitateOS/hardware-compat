@@ -66,7 +66,7 @@ impl HardwareProfile for WorkstationProfile {
 
             // === Thunderbolt ===
             KernelRequirement { config: "CONFIG_USB4", expected: ConfigValue::M, reason: "USB4/Thunderbolt", severity: Severity::High },
-            KernelRequirement { config: "CONFIG_THUNDERBOLT", expected: ConfigValue::M, reason: "Thunderbolt bus", severity: Severity::High },
+            KernelRequirement { config: "CONFIG_USB4", expected: ConfigValue::M, reason: "Thunderbolt bus", severity: Severity::High },
 
             // === Audio ===
             KernelRequirement { config: "CONFIG_SND_HDA_INTEL", expected: ConfigValue::Y, reason: "HD Audio", severity: Severity::High },
@@ -93,7 +93,6 @@ impl HardwareProfile for WorkstationProfile {
 
             // === ECC Memory ===
             KernelRequirement { config: "CONFIG_EDAC", expected: ConfigValue::Y, reason: "Error Detection And Correction", severity: Severity::High },
-            KernelRequirement { config: "CONFIG_EDAC_MM_EDAC", expected: ConfigValue::M, reason: "EDAC memory module", severity: Severity::High },
 
             // === Sensors ===
             KernelRequirement { config: "CONFIG_HWMON", expected: ConfigValue::Y, reason: "Hardware monitoring", severity: Severity::High },
@@ -131,7 +130,7 @@ impl HardwareProfile for WorkstationProfile {
             FirmwareRequirement { pattern: "i915/*", min_files: 100, reason: "Intel GPU firmware", severity: Severity::High },
 
             // Network
-            FirmwareRequirement { pattern: "intel/*", min_files: 200, reason: "Intel NIC/WiFi firmware", severity: Severity::High },
+            FirmwareRequirement { pattern: "intel/**/*", min_files: 200, reason: "Intel NIC/WiFi firmware", severity: Severity::High },
 
             // CPU Microcode
             FirmwareRequirement { pattern: "intel-ucode/*", min_files: 100, reason: "Intel microcode", severity: Severity::Critical },

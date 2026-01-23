@@ -32,7 +32,7 @@ impl HardwareProfile for FrameworkProfile {
 
             // === Thunderbolt/USB4 (CRITICAL for Framework) ===
             KernelRequirement { config: "CONFIG_USB4", expected: ConfigValue::M, reason: "USB4/Thunderbolt 4 (expansion cards)", severity: Severity::Critical },
-            KernelRequirement { config: "CONFIG_THUNDERBOLT", expected: ConfigValue::M, reason: "Thunderbolt bus driver", severity: Severity::Critical },
+            KernelRequirement { config: "CONFIG_USB4", expected: ConfigValue::M, reason: "Thunderbolt bus driver", severity: Severity::Critical },
             KernelRequirement { config: "CONFIG_TYPEC", expected: ConfigValue::M, reason: "USB Type-C support", severity: Severity::Critical },
             KernelRequirement { config: "CONFIG_TYPEC_UCSI", expected: ConfigValue::M, reason: "USB Type-C UCSI", severity: Severity::Critical },
             KernelRequirement { config: "CONFIG_TYPEC_TPS6598X", expected: ConfigValue::M, reason: "TI TPS6598x USB PD controller", severity: Severity::High },

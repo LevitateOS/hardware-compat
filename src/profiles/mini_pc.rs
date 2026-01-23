@@ -68,9 +68,9 @@ impl HardwareProfile for AmdMiniPcProfile {
             // AMD SoC audio (newer APUs)
             KernelRequirement { config: "CONFIG_SND_SOC", expected: ConfigValue::M, reason: "SoC audio framework", severity: Severity::Medium },
             KernelRequirement { config: "CONFIG_SND_SOC_AMD_ACP", expected: ConfigValue::M, reason: "AMD Audio CoProcessor", severity: Severity::Medium },
-            KernelRequirement { config: "CONFIG_SND_SOC_AMD_ACP3X", expected: ConfigValue::M, reason: "AMD ACP3x (Renoir/Cezanne)", severity: Severity::Medium },
-            KernelRequirement { config: "CONFIG_SND_SOC_AMD_ACP5X", expected: ConfigValue::M, reason: "AMD ACP5x", severity: Severity::Medium },
-            KernelRequirement { config: "CONFIG_SND_SOC_AMD_ACP6X", expected: ConfigValue::M, reason: "AMD ACP6x (Rembrandt)", severity: Severity::Medium },
+            KernelRequirement { config: "CONFIG_SND_SOC_AMD_ACP3x", expected: ConfigValue::M, reason: "AMD ACP3x (Renoir/Cezanne)", severity: Severity::Medium },
+            KernelRequirement { config: "CONFIG_SND_SOC_AMD_ACP5x", expected: ConfigValue::M, reason: "AMD ACP5x", severity: Severity::Medium },
+            KernelRequirement { config: "CONFIG_SND_SOC_AMD_ACP6x", expected: ConfigValue::M, reason: "AMD ACP6x (Rembrandt)", severity: Severity::Medium },
             KernelRequirement { config: "CONFIG_SND_SOC_AMD_PS", expected: ConfigValue::M, reason: "AMD Pink Sardine (Phoenix)", severity: Severity::Medium },
 
             // === USB ===

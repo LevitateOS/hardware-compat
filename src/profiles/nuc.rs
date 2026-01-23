@@ -55,7 +55,7 @@ impl HardwareProfile for IntelNucProfile {
 
             // === Thunderbolt (NUC8+) ===
             KernelRequirement { config: "CONFIG_USB4", expected: ConfigValue::M, reason: "Thunderbolt 3/4 / USB4 (NUC8+)", severity: Severity::Medium },
-            KernelRequirement { config: "CONFIG_THUNDERBOLT", expected: ConfigValue::M, reason: "Thunderbolt bus driver", severity: Severity::Medium },
+            KernelRequirement { config: "CONFIG_USB4", expected: ConfigValue::M, reason: "Thunderbolt bus driver", severity: Severity::Medium },
 
             // === Input ===
             KernelRequirement { config: "CONFIG_HID", expected: ConfigValue::Y, reason: "HID core (USB keyboards/mice)", severity: Severity::Critical },

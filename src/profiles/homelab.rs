@@ -99,7 +99,6 @@ impl HardwareProfile for HomelabProfile {
 
             // === ECC Memory ===
             KernelRequirement { config: "CONFIG_EDAC", expected: ConfigValue::Y, reason: "ECC error detection", severity: Severity::Critical },
-            KernelRequirement { config: "CONFIG_EDAC_MM_EDAC", expected: ConfigValue::M, reason: "EDAC memory module", severity: Severity::Critical },
             KernelRequirement { config: "CONFIG_EDAC_DECODE_MCE", expected: ConfigValue::M, reason: "MCE decoding", severity: Severity::High },
 
             // === Sensors ===
@@ -143,7 +142,7 @@ impl HardwareProfile for HomelabProfile {
     fn required_firmware(&self) -> &[FirmwareRequirement] {
         &[
             // Intel NIC firmware
-            FirmwareRequirement { pattern: "intel/*", min_files: 200, reason: "Intel NIC firmware", severity: Severity::High },
+            FirmwareRequirement { pattern: "intel/**/*", min_files: 200, reason: "Intel NIC firmware", severity: Severity::High },
 
             // CPU Microcode
             FirmwareRequirement { pattern: "intel-ucode/*", min_files: 100, reason: "Intel Xeon microcode", severity: Severity::Critical },

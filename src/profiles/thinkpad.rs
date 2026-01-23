@@ -60,7 +60,7 @@ impl HardwareProfile for ThinkPadProfile {
 
             // === Thunderbolt/USB-C ===
             KernelRequirement { config: "CONFIG_USB4", expected: ConfigValue::M, reason: "Thunderbolt 3/4 / USB4", severity: Severity::High },
-            KernelRequirement { config: "CONFIG_THUNDERBOLT", expected: ConfigValue::M, reason: "Thunderbolt bus", severity: Severity::High },
+            KernelRequirement { config: "CONFIG_USB4", expected: ConfigValue::M, reason: "Thunderbolt bus", severity: Severity::High },
             KernelRequirement { config: "CONFIG_TYPEC", expected: ConfigValue::M, reason: "USB Type-C support", severity: Severity::High },
             KernelRequirement { config: "CONFIG_TYPEC_UCSI", expected: ConfigValue::M, reason: "USB Type-C UCSI", severity: Severity::High },
 
