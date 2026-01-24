@@ -12,36 +12,27 @@ on:
         required: true
         default: 'patch'
         type: choice
-        options:
-          - patch
-          - minor
-          - major
+        options: [patch, minor, major]
 
 jobs:
-  # Check and Test (Strict)
-  check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - run: cargo check
+  changes:
+    uses: LevitateOS/LevitateOS/.github/workflows/detect-changes.yml@master
+    with:
+      type: rust
 
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      # Run all tests (unit + integration described in src/kernel.rs and tests/integration_test.rs)
-      - run: cargo test
+  ci:
+    needs: changes
+    if: needs.changes.outputs.has_changes == 'true'
+    uses: LevitateOS/LevitateOS/.github/workflows/rust-ci.yml@master
+    with:
+      msrv: '1.93'
 
-  # Auto-release on push to main (if tests pass)
   release:
-    needs: [check, test]
+    needs: [changes, ci]
     if: |
-      (github.event_name == 'push' &&
-       (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main') &&
-       !startsWith(github.event.head_commit.message, 'chore: Bump version')) ||
-      github.event_name == 'workflow_dispatch'
+      needs.changes.outputs.has_changes == 'true' &&
+      ((github.event_name == 'push' && !startsWith(github.event.head_commit.message, 'chore: Bump version')) ||
+      github.event_name == 'workflow_dispatch')
     uses: LevitateOS/LevitateOS/.github/workflows/rust-release.yml@master
     with:
       create-binary-artifact: true
