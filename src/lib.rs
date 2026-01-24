@@ -47,7 +47,7 @@ impl HardwareCompatChecker {
     pub fn verify_firmware_requirement(&self, req: &FirmwareRequirement) -> CompatResult {
         let pattern = self.firmware_dir.join(req.pattern);
         let pattern_str = pattern.to_string_lossy();
-        
+
         match glob(&pattern_str) {
             Ok(paths) => {
                 let count = paths.filter_map(Result::ok).count();
