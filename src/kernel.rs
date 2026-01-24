@@ -24,11 +24,17 @@ impl KernelRequirement {
             // Built-in (y) satisfies module (m) requirement - built-in is strictly better
             (Some("y"), ConfigValue::M) => CompatResult::Pass("y (built-in)".to_string()),
             // String value match
-            (Some(v), ConfigValue::Value(expected)) if v == expected => CompatResult::Pass(v.to_string()),
+            (Some(v), ConfigValue::Value(expected)) if v == expected => {
+                CompatResult::Pass(v.to_string())
+            }
             // Module when built-in required is a warning, not failure
-            (Some("m"), ConfigValue::Y) => CompatResult::Warning("m (module, expected built-in)".to_string()),
+            (Some("m"), ConfigValue::Y) => {
+                CompatResult::Warning("m (module, expected built-in)".to_string())
+            }
             // Other mismatches
-            (Some(v), _) => CompatResult::Fail(format!("Found {}, expected {:?}", v, self.expected)),
+            (Some(v), _) => {
+                CompatResult::Fail(format!("Found {}, expected {:?}", v, self.expected))
+            }
             (None, _) => CompatResult::Fail("Not found".to_string()),
         }
     }
@@ -37,7 +43,7 @@ impl KernelRequirement {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::report::{Severity, CompatResult};
+    use crate::report::{CompatResult, Severity};
 
     #[test]
     fn test_verify_y() {

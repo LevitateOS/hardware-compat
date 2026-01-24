@@ -1,17 +1,17 @@
-use std::path::PathBuf;
-use anyhow::{Result, Context};
-use std::collections::HashMap;
+use anyhow::{Context, Result};
 use glob::glob;
+use std::collections::HashMap;
+use std::path::PathBuf;
 
-pub mod kernel;
 pub mod firmware;
+pub mod kernel;
 pub mod profiles;
 pub mod report;
 
-pub use kernel::{KernelRequirement, ConfigValue};
 pub use firmware::FirmwareRequirement;
+pub use kernel::{ConfigValue, KernelRequirement};
 pub use profiles::HardwareProfile;
-pub use report::{CompatibilityReport, Severity, CompatResult};
+pub use report::{CompatResult, CompatibilityReport, Severity};
 
 pub struct HardwareCompatChecker {
     kernel_config_path: PathBuf,
@@ -27,9 +27,13 @@ impl HardwareCompatChecker {
     }
 
     pub fn load_kernel_config(&self) -> Result<HashMap<String, String>> {
-        let content = std::fs::read_to_string(&self.kernel_config_path)
-            .with_context(|| format!("Failed to read kernel config at {:?}", self.kernel_config_path))?;
-        
+        let content = std::fs::read_to_string(&self.kernel_config_path).with_context(|| {
+            format!(
+                "Failed to read kernel config at {:?}",
+                self.kernel_config_path
+            )
+        })?;
+
         let mut configs = HashMap::new();
         for line in content.lines() {
             let line = line.trim();
@@ -54,7 +58,10 @@ impl HardwareCompatChecker {
                 if count >= req.min_files {
                     CompatResult::Pass(format!("Found {} files", count))
                 } else if count > 0 {
-                    CompatResult::Warning(format!("Found only {} files, expected {}", count, req.min_files))
+                    CompatResult::Warning(format!(
+                        "Found only {} files, expected {}",
+                        count, req.min_files
+                    ))
                 } else {
                     CompatResult::Fail(format!("No files found matching {}", req.pattern))
                 }
@@ -65,7 +72,10 @@ impl HardwareCompatChecker {
 
     pub fn verify_profile(&self, profile: &dyn HardwareProfile) -> Result<CompatibilityReport> {
         let configs = self.load_kernel_config()?;
-        let mut report = CompatibilityReport::new(profile.name().to_string(), profile.description().to_string());
+        let mut report = CompatibilityReport::new(
+            profile.name().to_string(),
+            profile.description().to_string(),
+        );
 
         // Verify kernel configs
         for req in profile.required_kernel_configs() {

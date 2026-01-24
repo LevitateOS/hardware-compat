@@ -1,7 +1,7 @@
-use clap::{Parser, Subcommand};
-use hardware_compat::{HardwareCompatChecker, profiles};
-use std::path::PathBuf;
 use anyhow::Result;
+use clap::{Parser, Subcommand};
+use hardware_compat::{profiles, HardwareCompatChecker};
+use std::path::PathBuf;
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
@@ -12,7 +12,11 @@ struct Cli {
     #[arg(short, long, default_value = "leviso/output/kernel-build/.config")]
     kernel_config: PathBuf,
 
-    #[arg(short = 'F', long, default_value = "leviso/output/squashfs-root/usr/lib/firmware")]
+    #[arg(
+        short = 'F',
+        long,
+        default_value = "leviso/output/squashfs-root/usr/lib/firmware"
+    )]
     firmware_dir: PathBuf,
 }
 
@@ -31,10 +35,7 @@ enum Commands {
 fn main() -> Result<()> {
     let cli = Cli::parse();
 
-    let checker = HardwareCompatChecker::new(
-        cli.kernel_config,
-        cli.firmware_dir,
-    );
+    let checker = HardwareCompatChecker::new(cli.kernel_config, cli.firmware_dir);
 
     match cli.command {
         Commands::Verify { profile } => {
@@ -42,10 +43,15 @@ fn main() -> Result<()> {
             let mut results = Vec::new();
 
             if let Some(profile_name) = profile {
-                let p = all_profiles.iter()
-                    .find(|p| p.name().to_lowercase().contains(&profile_name.to_lowercase()))
+                let p = all_profiles
+                    .iter()
+                    .find(|p| {
+                        p.name()
+                            .to_lowercase()
+                            .contains(&profile_name.to_lowercase())
+                    })
                     .ok_or_else(|| anyhow::anyhow!("Profile '{}' not found", profile_name))?;
-                
+
                 let report = checker.verify_profile(p.as_ref())?;
                 report.print_summary();
                 results.push(report);

@@ -1,6 +1,6 @@
 use hardware_compat::{
-    HardwareCompatChecker, HardwareProfile, KernelRequirement, 
-    FirmwareRequirement, ConfigValue, Severity, CompatResult
+    CompatResult, ConfigValue, FirmwareRequirement, HardwareCompatChecker, HardwareProfile,
+    KernelRequirement, Severity,
 };
 use std::io::Write;
 use tempfile::TempDir;
@@ -27,14 +27,12 @@ impl MockProfile {
                     severity: Severity::Medium,
                 },
             ],
-            firmware_reqs: vec![
-                FirmwareRequirement {
-                    pattern: "mock/fw_*.bin",
-                    min_files: 2,
-                    reason: "Mock firmware",
-                    severity: Severity::Critical,
-                }
-            ],
+            firmware_reqs: vec![FirmwareRequirement {
+                pattern: "mock/fw_*.bin",
+                min_files: 2,
+                reason: "Mock firmware",
+                severity: Severity::Critical,
+            }],
         }
     }
 }
@@ -43,7 +41,7 @@ impl HardwareProfile for MockProfile {
     fn name(&self) -> &str {
         "Mock Profile"
     }
-    
+
     fn description(&self) -> &str {
         "A profile for testing check logic"
     }
@@ -69,7 +67,7 @@ fn test_integration_check() {
     let mut f = std::fs::File::create(&config_path).unwrap();
     writeln!(f, "CONFIG_MOCK_REQUIRED=y").unwrap();
     writeln!(f, "CONFIG_MOCK_MODULE=m").unwrap();
-    
+
     // 2. Create firmware files
     std::fs::File::create(firmware_dir.join("mock/fw_1.bin")).unwrap();
     std::fs::File::create(firmware_dir.join("mock/fw_2.bin")).unwrap();
@@ -79,7 +77,10 @@ fn test_integration_check() {
     let profile = MockProfile::new();
     let report = checker.verify_profile(&profile).unwrap();
 
-    assert!(!report.has_critical_failures(), "Should pass with correct config/fw");
+    assert!(
+        !report.has_critical_failures(),
+        "Should pass with correct config/fw"
+    );
     assert_eq!(report.kernel_results.len(), 2);
     assert_eq!(report.firmware_results.len(), 1);
 
@@ -87,21 +88,27 @@ fn test_integration_check() {
     std::fs::remove_file(firmware_dir.join("mock/fw_1.bin")).unwrap();
     std::fs::remove_file(firmware_dir.join("mock/fw_2.bin")).unwrap();
     let report_fail = checker.verify_profile(&profile).unwrap();
-    
-    let fw_failed = report_fail.firmware_results.iter().any(|(_, res)| matches!(res, CompatResult::Fail(_)));
+
+    let fw_failed = report_fail
+        .firmware_results
+        .iter()
+        .any(|(_, res)| matches!(res, CompatResult::Fail(_)));
     assert!(fw_failed, "Should fail with missing firmware");
-    assert!(report_fail.has_critical_failures(), "Missing firmware is critical");
+    assert!(
+        report_fail.has_critical_failures(),
+        "Missing firmware is critical"
+    );
 
     // 5. Test Failure case (Missing Config)
     let mut f = std::fs::File::create(&config_path).unwrap(); // Overwrite
     writeln!(f, "CONFIG_MOCK_MODULE=m").unwrap(); // Missing REQUIRED
-    // Must run verify again
-    // Re-create checker because config is read on each verify? No, verify_profile calls load_kernel_config()
+                                                  // Must run verify again
+                                                  // Re-create checker because config is read on each verify? No, verify_profile calls load_kernel_config()
     let report_fail_config = checker.verify_profile(&profile).unwrap();
-    
-    let config_failed = report_fail_config.kernel_results.iter().any(|(req, res)| 
+
+    let config_failed = report_fail_config.kernel_results.iter().any(|(req, res)| {
         req.config == "CONFIG_MOCK_REQUIRED" && matches!(res, CompatResult::Fail(_))
-    );
+    });
     assert!(config_failed, "Should fail with missing critical config");
     assert!(report_fail_config.has_critical_failures());
 }
