@@ -22,8 +22,8 @@ This tool uses a strict continuous delivery pipeline (`.github/workflows/ci.yml`
 
 ## Requirements
 
-- Built LevitateOS ISO with kernel config at `leviso/output/kernel-build/.config`
-- Firmware directory at `leviso/output/staging/lib/firmware`
+- Built LevitateOS ISO with kernel config at `.artifacts/out/leviso/kernel-build/.config`
+- Firmware directory at `.artifacts/out/leviso/squashfs-root/usr/lib/firmware`
 
 ## License
 

@@ -9,13 +9,17 @@ struct Cli {
     #[command(subcommand)]
     command: Commands,
 
-    #[arg(short, long, default_value = "leviso/output/kernel-build/.config")]
+    #[arg(
+        short,
+        long,
+        default_value = ".artifacts/out/leviso/kernel-build/.config"
+    )]
     kernel_config: PathBuf,
 
     #[arg(
         short = 'F',
         long,
-        default_value = "leviso/output/squashfs-root/usr/lib/firmware"
+        default_value = ".artifacts/out/leviso/squashfs-root/usr/lib/firmware"
     )]
     firmware_dir: PathBuf,
 }
