@@ -12,7 +12,7 @@ struct Cli {
     #[arg(
         short,
         long,
-        default_value = ".artifacts/out/levitate/kernel-build/.config"
+        default_value = ".artifacts/kernel/levitate/current/kernel-build/.config"
     )]
     kernel_config: PathBuf,
 
