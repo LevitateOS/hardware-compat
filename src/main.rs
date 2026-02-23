@@ -19,7 +19,7 @@ struct Cli {
     #[arg(
         short = 'F',
         long,
-        default_value = ".artifacts/out/levitate/squashfs-root/usr/lib/firmware"
+        default_value = ".artifacts/work/levitate/stage01-rootfs-provider/rocky/rootfs-minimal/usr/lib/firmware"
     )]
     firmware_dir: PathBuf,
 }

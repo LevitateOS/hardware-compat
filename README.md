@@ -23,7 +23,7 @@ This tool uses a strict continuous delivery pipeline (`.github/workflows/ci.yml`
 ## Requirements
 
 - Built LevitateOS ISO with kernel config at `.artifacts/kernel/levitate/current/kernel-build/.config`
-- Firmware directory at `.artifacts/out/levitate/squashfs-root/usr/lib/firmware`
+- Firmware directory at `.artifacts/work/levitate/stage01-rootfs-provider/rocky/rootfs-minimal/usr/lib/firmware`
 
 ## License
 

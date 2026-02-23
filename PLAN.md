@@ -141,7 +141,7 @@ testing/hardware-compat/
 pub struct HardwareCompatChecker {
     kernel_config: PathBuf,  // Path to .config
     firmware_dir: PathBuf,   // Path to firmware directory
-    staging_dir: PathBuf,    // Path to squashfs staging
+    staging_dir: PathBuf,    // Path to stage rootfs source staging
 }
 
 impl HardwareCompatChecker {
