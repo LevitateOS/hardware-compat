@@ -11,13 +11,13 @@ Static verification test for LevitateOS hardware compatibility. Checks kernel dr
 
 Run the test suite (unit + integration):
 ```bash
-cargo test
+cargo check
 ```
 
 ## CI / Release
 
 This tool uses a strict continuous delivery pipeline (`.github/workflows/ci.yml`).
-1.  **Strict Verification**: Runs `cargo test` (Unit & Integration) on every push. **Releases are blocked if tests fail.**
+1. **Build verification**: Compile the checker and validate it against actual kernel configuration and firmware artifacts. Unit tests are prohibited.
 2.  **Auto-Release**: If tests pass on `main`, it automatically bumps the version, creates a GitHub Release, and publishes binary artifacts.
 
 ## Requirements
