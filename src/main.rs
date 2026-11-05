@@ -16,12 +16,9 @@ struct Cli {
     )]
     kernel_config: PathBuf,
 
-    #[arg(
-        short = 'F',
-        long,
-        default_value = ".artifacts/work/levitate/stage01-rootfs-provider/rocky/rootfs-minimal/usr/lib/firmware"
-    )]
-    firmware_dir: PathBuf,
+    /// Firmware directory from the product rootfs being verified (required for verify).
+    #[arg(short = 'F', long)]
+    firmware_dir: Option<PathBuf>,
 }
 
 #[derive(Subcommand)]
@@ -39,10 +36,12 @@ enum Commands {
 fn main() -> Result<()> {
     let cli = Cli::parse();
 
-    let checker = HardwareCompatChecker::new(cli.kernel_config, cli.firmware_dir);
-
     match cli.command {
         Commands::Verify { profile } => {
+            let firmware_dir = cli.firmware_dir.ok_or_else(|| anyhow::anyhow!(
+                "hardware-compat verify requires a product firmware directory. Run: hardware-compat --firmware-dir <rootfs>/usr/lib/firmware verify"
+            ))?;
+            let checker = HardwareCompatChecker::new(cli.kernel_config, firmware_dir);
             let all_profiles = profiles::get_all_profiles();
             let mut results = Vec::new();
 

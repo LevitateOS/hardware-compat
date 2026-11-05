@@ -23,7 +23,9 @@ This tool uses a strict continuous delivery pipeline (`.github/workflows/ci.yml`
 ## Requirements
 
 - Built LevitateOS ISO with kernel config at `.artifacts/kernel/levitate/current/kernel-build/.config`
-- Firmware directory at `.artifacts/work/levitate/stage01-rootfs-provider/rocky/rootfs-minimal/usr/lib/firmware`
+- Pass the product rootfs firmware directory explicitly with `--firmware-dir <rootfs>/usr/lib/firmware`; source-recipe working directories are not tool defaults.
+
+Example: `hardware-compat --firmware-dir /path/to/product-rootfs/usr/lib/firmware verify`. `hardware-compat profiles` lists profiles without requiring product artifacts.
 
 ## License
 
